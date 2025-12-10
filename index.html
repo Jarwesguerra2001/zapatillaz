@@ -283,12 +283,13 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 
-  <!-- ================== CARRITO ================== -->
-<script type="module">
+ <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
-import { getFirestore, collection, addDoc, getDocs, query, where, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
+import { getFirestore, doc, setDoc, addDoc, collection, getDocs, query, where, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-analytics.js";
 
+/* ================= FIREBASE CONFIG ================= */
 const firebaseConfig = {
   apiKey: "AIzaSyDBM97jFiC31LlofM_YOJY2l20YqAkxYWc",
   authDomain: "casa-zapatillas.firebaseapp.com",
@@ -299,9 +300,132 @@ const firebaseConfig = {
   measurementId: "G-TGGF3N8RTD"
 };
 const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
 const auth = getAuth(app);
 const db = getFirestore(app);
+const provider = new GoogleAuthProvider();
+provider.setCustomParameters({ prompt: "select_account" });
 
+/* ================== DOM ELEMENTS ================== */
+const googleBtn = document.getElementById("googleLogin");
+const loginForm = document.getElementById("formlogin");
+const registerForm = document.getElementById("formRegister");
+const loginItem = document.getElementById("loginItem");
+
+/* ================== LOGIN GOOGLE ================== */
+googleBtn.addEventListener("click", async () => {
+  try {
+    const result = await signInWithPopup(auth, provider);
+    const user = result.user;
+    await setDoc(doc(db, "usuarios", user.uid), {
+      uid: user.uid,
+      nombre: user.displayName,
+      email: user.email,
+      foto: user.photoURL
+    }, { merge: true });
+    cerrarModalAuth();
+    alert("Hola, Bienvenido " + (user.displayName || user.email));
+  } catch (err) {
+    alert("Error al iniciar sesión con Google");
+    console.error(err);
+  }
+});
+
+/* ================== REGISTRO EMAIL ================== */
+registerForm.addEventListener("submit", async e => {
+  e.preventDefault();
+  const nombre = regNombre.value.trim();
+  const email = regEmail.value.trim();
+  const pass = regPassword.value;
+
+  try {
+    const cred = await createUserWithEmailAndPassword(auth, email, pass);
+    const user = cred.user;
+    await setDoc(doc(db, "usuarios", user.uid), {
+      uid: user.uid,
+      nombre,
+      email,
+      foto: `https://ui-avatars.com/api/?name=${encodeURIComponent(nombre)}&background=random`
+    });
+    cerrarModalAuth();
+    alert("Registro exitoso. Bienvenido " + nombre);
+  } catch (err) {
+    alert("Error en registro: " + err.message);
+  }
+});
+
+/* ================== LOGIN EMAIL ================== */
+loginForm.addEventListener("submit", async e => {
+  e.preventDefault();
+  try {
+    const email = loginEmail.value.trim();
+    const password = loginPassword.value.trim();
+    const cred = await signInWithEmailAndPassword(auth, email, password);
+    cerrarModalAuth();
+    alert("Hola, Bienvenido " + (cred.user.displayName || email));
+  } catch (err) {
+    alert("Usuario o contraseña incorrecta");
+  }
+});
+
+/* ================== NAVBAR ================== */
+function cerrarModalAuth() {
+  const modal = bootstrap.Modal.getInstance(document.getElementById("authModal"));
+  if (modal) modal.hide();
+}
+
+function pintarUsuarioNavbar(user) {
+  if (document.getElementById("userinfo")) return;
+
+  const foto = user.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.displayName || user.email)}`;
+  const nombre = user.displayName || user.email;
+
+  const li = document.createElement("li");
+  li.className = "nav-item dropdown ms-3 d-flex align-items-center";
+  li.id = "userinfo";
+
+  li.innerHTML = `
+    <button class="btn btn-link position-relative me-3 text-white" id="btnCarritoIcono">
+      <i class="bi bi-cart3 fs-5 text-white"></i>
+      <span id="contadorCarrito" class="badge rounded-pill bg-danger position-absolute top-0 start-100 translate-middle">0</span>
+    </button>
+
+    <a class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
+      <img src="${foto}" class="rounded-circle me-2" width="32" height="32">
+      <span class="text-white">${nombre}</span>
+    </a>
+
+    <ul class="dropdown-menu dropdown-menu-end">
+      <li><a class="dropdown-item" id="misPedidosBtn">Mis pedidos</a></li>
+      <li><hr class="dropdown-divider"></li>
+      <li><a class="dropdown-item text-danger" id="cerrarSesionBtn">Cerrar sesión</a></li>
+    </ul>
+  `;
+
+  document.querySelector(".navbar-nav").appendChild(li);
+
+  document.getElementById("cerrarSesionBtn").addEventListener("click", async () => {
+    await signOut(auth);
+  });
+
+  document.getElementById("misPedidosBtn").addEventListener("click", async () => {
+    await cargarPedidosUsuario();
+    const modal = new bootstrap.Modal(document.getElementById("modalPedidos"));
+    modal.show();
+  });
+
+  // ABRIR MODAL CARRITO
+  const btnCarrito = document.getElementById("btnCarritoIcono");
+  btnCarrito.addEventListener("click", () => {
+    renderCarrito();
+    const modalCarrito = new bootstrap.Modal(document.getElementById("modalCarrito"));
+    modalCarrito.show();
+  });
+
+  actualizarContador();
+}
+
+/* ================== CARRITO ================== */
 let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
 function actualizarContador() {
@@ -313,7 +437,6 @@ function renderCarrito() {
   const lista = document.getElementById("listaCarrito");
   lista.innerHTML = "";
   let total = 0;
-
   carrito.forEach((p, i) => {
     total += p.precio;
     const div = document.createElement("div");
@@ -323,21 +446,20 @@ function renderCarrito() {
         <img src="${p.img}" width="50" height="50" class="me-2 rounded">
         <span>${p.nombre}</span>
       </div>
-      <div class="d-flex align-items-center">
+      <div>
         <span class="fw-bold me-3">S/ ${p.precio}</span>
         <button class="btn btn-sm btn-danger btn-eliminar" data-index="${i}"><i class="bi bi-trash"></i></button>
       </div>
     `;
     lista.appendChild(div);
   });
-
   document.getElementById("totalCarrito").textContent = "S/ " + total.toFixed(2);
 
-  // Agregar eventos a botones de eliminar
+  // BOTONES ELIMINAR
   document.querySelectorAll(".btn-eliminar").forEach(btn => {
-    btn.addEventListener("click", e => {
-      const idx = parseInt(btn.dataset.index);
-      carrito.splice(idx, 1);
+    btn.addEventListener("click", () => {
+      const index = btn.getAttribute("data-index");
+      carrito.splice(index, 1);
       localStorage.setItem("carrito", JSON.stringify(carrito));
       renderCarrito();
       actualizarContador();
@@ -346,8 +468,8 @@ function renderCarrito() {
 }
 
 /* AGREGAR PRODUCTOS */
-document.querySelectorAll(".addToCart").forEach((btn) => {
-  btn.addEventListener("click", () => {
+document.querySelectorAll(".addToCart").forEach((btn, index) => {
+  btn.addEventListener("click", e => {
     const card = btn.closest(".card");
     const nombre = card.querySelector(".card-title").textContent;
     const precio = parseFloat(card.querySelector(".fw-bold").textContent.replace("s/", "").trim());
@@ -357,65 +479,53 @@ document.querySelectorAll(".addToCart").forEach((btn) => {
     localStorage.setItem("carrito", JSON.stringify(carrito));
     renderCarrito();
     actualizarContador();
-
     document.getElementById("alertaAgregado").style.display = "block";
     setTimeout(() => document.getElementById("alertaAgregado").style.display = "none", 1500);
   });
 });
 
-/* BOTON PAGAR */
+/* ================== PAGAR CARRITO ================== */
 document.getElementById("btnComprar").addEventListener("click", async () => {
   const user = auth.currentUser;
   if (!user) {
-    alert("Debes iniciar sesión para realizar la compra");
+    alert("Debes iniciar sesión para pagar");
     return;
   }
-
   if (carrito.length === 0) {
     alert("Tu carrito está vacío");
     return;
   }
-
   try {
     await addDoc(collection(db, "pedidos"), {
       uid: user.uid,
       items: carrito,
-      total: carrito.reduce((a,b)=>a+b.precio,0),
+      total: carrito.reduce((acc, i) => acc + i.precio, 0),
       fecha: serverTimestamp()
     });
-
+    alert("Pedido realizado con éxito");
     carrito = [];
     localStorage.setItem("carrito", JSON.stringify(carrito));
     renderCarrito();
     actualizarContador();
-
-    alert("Pedido realizado con éxito 🎉");
     const modalCarrito = bootstrap.Modal.getInstance(document.getElementById("modalCarrito"));
-    if (modalCarrito) modalCarrito.hide();
+    modalCarrito.hide();
   } catch (err) {
-    console.error(err);
-    alert("Ocurrió un error al realizar la compra");
+    alert("Error al realizar el pedido: " + err.message);
   }
 });
 
-/* CARGAR PEDIDOS USUARIO */
+/* ================== PEDIDOS ================== */
 async function cargarPedidosUsuario() {
   const user = auth.currentUser;
   if (!user) {
     alert("Debes iniciar sesión para ver tus pedidos");
     return;
   }
-
   const q = query(collection(db, "pedidos"), where("uid", "==", user.uid));
   const querySnapshot = await getDocs(q);
   const lista = document.getElementById("listaPedidos");
   lista.innerHTML = "";
-
-  if (querySnapshot.empty) {
-    lista.innerHTML = "<p>No tienes pedidos aún</p>";
-    return;
-  }
-
+  if (querySnapshot.empty) lista.innerHTML = "<p>No tienes pedidos aún</p>";
   querySnapshot.forEach(docu => {
     const data = docu.data();
     const div = document.createElement("div");
@@ -429,23 +539,31 @@ async function cargarPedidosUsuario() {
             <span>${item.nombre}</span>
           </div>
           <span>S/ ${item.precio}</span>
-        </div>
-      `).join('')}
-      <div class="fw-bold mt-2">Total: S/ ${data.total.toFixed(2)}</div>
+        </div>`).join("")}
+      <div class="mt-2 fw-bold">Total: S/ ${data.total.toFixed(2)}</div>
     `;
     lista.appendChild(div);
   });
 }
 
-/* ESTADO DE AUTENTICACION */
+/* ================== AUTH STATE ================== */
 onAuthStateChanged(auth, user => {
-  actualizarContador();
+  if (user) {
+    loginItem.style.display = "none";
+    pintarUsuarioNavbar(user);
+  } else {
+    loginItem.style.display = "block";
+    const info = document.getElementById("userinfo");
+    if (info) info.remove();
+  }
 });
+
+/* ================== INICIAL ================== */
 document.addEventListener("DOMContentLoaded", () => {
-  renderCarrito();
   actualizarContador();
 });
 </script>
+
 
 </body>
 </html>
