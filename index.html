@@ -471,6 +471,12 @@ function pintarUsuarioNavbar(user) {
   document.getElementById("misPedidosBtn").addEventListener("click", async () => {
     await cargarPedidosUsuario();
   });
+
+  // Abrir carrito al hacer clic en ícono
+  document.getElementById("btnCarritoIcono").addEventListener("click", () => {
+    renderCarrito();
+    new bootstrap.Modal(document.getElementById("modalCarrito")).show();
+  });
 }
 
 function limpiarUsuarioNavbar() {
@@ -492,13 +498,6 @@ onAuthStateChanged(auth, user => {
    CARRITO
    ============================================================ */
 let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-
-function mostrarAlerta(msg = "Agregado al carrito") {
-  const al = document.getElementById("alertaAgregado");
-  al.textContent = msg;
-  al.style.display = "block";
-  setTimeout(() => al.style.display = "none", 1600);
-}
 
 function guardarCarrito() {
   localStorage.setItem("carrito", JSON.stringify(carrito));
@@ -580,13 +579,6 @@ function eliminarItem(index) {
   renderCarrito();
 }
 
-document.addEventListener("click", e => {
-  if (e.target.closest("#btnCarritoIcono")) {
-    renderCarrito();
-    new bootstrap.Modal(document.getElementById("modalCarrito")).show();
-  }
-});
-
 document.querySelectorAll(".addToCart").forEach(btn => {
   btn.addEventListener("click", e => {
     if (!document.getElementById("userinfo")) {
@@ -604,7 +596,6 @@ document.querySelectorAll(".addToCart").forEach(btn => {
     else carrito.push({ nombre, precio, img, cantidad: 1 });
 
     guardarCarrito();
-    mostrarAlerta();
   });
 });
 
@@ -724,6 +715,7 @@ function renderPedidoHtml(p, numero) {
   `;
 }
 </script>
+
 
 
 
