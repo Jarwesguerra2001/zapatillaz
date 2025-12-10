@@ -8,18 +8,60 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <style>
-.pedido-card { border: 1px solid #ddd; background: #fff; border-radius: 10px; padding: 15px; margin-bottom: 20px; }
-.pedido-header { font-size: 18px; font-weight: bold; margin-bottom: 10px; }
-.pedido-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #eee; }
-.pedido-item:last-child { border: none; }
-.pedido-item img { width: 60px; height: 60px; border-radius: 8px; margin-right: 12px; }
-#alertaAgregado { position: fixed; top: 20px; right: 20px; z-index: 2000; display: none; padding: 10px 14px; border-radius: 6px; font-weight: 600; box-shadow: 0 4px 10px rgba(0,0,0,.15); background-color: green; color: white; }
+.pedido-card {
+  border: 1px solid #ddd;
+  background: #fff;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 20px;
+}
+
+.pedido-header {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.pedido-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.pedido-item:last-child {
+  border: none;
+}
+
+.pedido-item img {
+  width: 60px;
+  height: 60px;
+  border-radius: 8px;
+  margin-right: 12px;
+}
+
+#alertaAgregado {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 2000;
+  display: none;
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-weight: 600;
+  box-shadow: 0 4px 10px rgba(0,0,0,.15);
+  background-color: green;
+  color: white;
+}
+
+.pedido-item { border-bottom: 1px solid #e9ecef; padding: 10px 0; }
   </style>
 </head>
 
 <body>
 
-<div id="alertaAgregado">El PRODUCTO SE HA AGREGADO CORRECTAMENTE 😀</div>
+<div id="alertaAgregado" class="alert alert-success">El PRODUCTO SE A AGREGA CORRECTAMENTE 😀</div>
 
 <!-- NAVBAR -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -34,12 +76,6 @@
         <li class="nav-item" id="loginItem">
           <button class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#authModal">
             Iniciar sesión / Registrarse
-          </button>
-        </li>
-        <li class="nav-item ms-3 d-flex align-items-center">
-          <button class="btn btn-link position-relative me-3 text-white" id="btnCarritoIcono">
-            <i class="bi bi-cart3 fs-5 text-white"></i>
-            <span id="contadorCarrito" class="badge rounded-pill bg-danger position-absolute top-0 start-100 translate-middle">0</span>
           </button>
         </li>
       </ul>
@@ -61,20 +97,102 @@
     <h2 class="text-center mb-4">NUESTROS PRODUCTOS A UN BUEN PRECIO</h2>
     <div class="row g-4">
 
-      <!-- PRODUCTO EJEMPLO -->
+      <!-- PRODUCTOS -->
       <div class="col-12 col-sm-6 col-md-3">
         <div class="card h-80 shadow-sm">
           <img src="img/1.jpeg" class="card-img-top" alt="camisa">
           <div class="card-body text-center">
             <h5 class="card-title">camisa</h5>
             <p class="card-text">para hombre</p>
-            <p class="fw-bold">S/30.00</p>
+            <p class="fw-bold">s/30.00</p>
             <button class="btn btn-primary addToCart">AGREGAR AL CARRITO</button>
           </div>
         </div>
       </div>
 
-      <!-- Repite tus productos aquí -->
+      <div class="col-12 col-sm-6 col-md-3">
+        <div class="card h-80 shadow-sm">
+          <img src="img/2.jpeg" class="card-img-top" alt="zapatillas">
+          <div class="card-body text-center">
+            <h5 class="card-title">zapatillas</h5>
+            <p class="card-text">zapatillas deportivas</p>
+            <p class="fw-bold">s/35.00</p>
+            <button class="btn btn-primary addToCart">AGREGAR AL CARRITO</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-sm-6 col-md-3">
+        <div class="card h-80 shadow-sm">
+          <img src="img/3.jpeg" class="card-img-top" alt="zapatillas">
+          <div class="card-body text-center">
+            <h5 class="card-title">zapatillas</h5>
+            <p class="card-text">zapatillas deportivas</p>
+            <p class="fw-bold">s/25.00</p>
+            <button class="btn btn-primary addToCart">AGREGAR AL CARRITO</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-sm-6 col-md-3">
+        <div class="card h-80 shadow-sm">
+          <img src="img/4.jpeg" class="card-img-top" alt="zapatillas">
+          <div class="card-body text-center">
+            <h5 class="card-title">zapatillas</h5>
+            <p class="card-text">zapatillas deportivas</p>
+            <p class="fw-bold">s/40.00</p>
+            <button class="btn btn-primary addToCart">AGREGAR AL CARRITO</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-sm-6 col-md-3">
+        <div class="card h-80 shadow-sm">
+          <img src="img/5.jpeg" class="card-img-top" alt="zapatillas">
+          <div class="card-body text-center">
+            <h5 class="card-title">zapatillas</h5>
+            <p class="card-text">zapatillas deportivas</p>
+            <p class="fw-bold">s/35.00</p>
+            <button class="btn btn-primary addToCart">AGREGAR AL CARRITO</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-sm-6 col-md-3">
+        <div class="card h-80 shadow-sm">
+          <img src="img/6.jpeg" class="card-img-top" alt="zapatillas">
+          <div class="card-body text-center">
+            <h5 class="card-title">zapatillas</h5>
+            <p class="card-text">zapatillas deportivas</p>
+            <p class="fw-bold">s/35.00</p>
+            <button class="btn btn-primary addToCart">AGREGAR AL CARRITO</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-sm-6 col-md-3">
+        <div class="card h-80 shadow-sm">
+          <img src="img/7.jpeg" class="card-img-top" alt="zapatillas">
+          <div class="card-body text-center">
+            <h5 class="card-title">zapatillas</h5>
+            <p class="card-text">zapatillas deportivas</p>
+            <p class="fw-bold">s/35.00</p>
+            <button class="btn btn-primary addToCart">AGREGAR AL CARRITO</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-sm-6 col-md-3">
+        <div class="card h-80 shadow-sm">
+          <img src="img/8.jpeg" class="card-img-top" alt="zapatillas">
+          <div class="card-body text-center">
+            <h5 class="card-title">zapatillas</h5>
+            <p class="card-text">zapatillas deportivas</p>
+            <p class="fw-bold">s/35.00</p>
+            <button class="btn btn-primary addToCart">AGREGAR AL CARRITO</button>
+          </div>
+        </div>
+      </div>
 
     </div>
   </div>
@@ -88,11 +206,13 @@
         <h5 class="modal-title">Acceder a tu cuenta</h5>
         <button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
       </div>
+
       <div class="modal-body">
         <ul class="nav nav-tabs mb-3">
           <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#loginTab">Iniciar Sesión</button></li>
           <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#registerTab">Registrarse</button></li>
         </ul>
+
         <div class="tab-content">
           <div class="tab-pane fade show active" id="loginTab">
             <div class="d-grid mb-3">
@@ -100,12 +220,14 @@
                 <i class="bi bi-google"></i> Iniciar sesión con Google
               </button>
             </div>
+
             <form id="formlogin">
               <div class="mb-3"><label>Email</label><input type="email" id="loginEmail" class="form-control" required></div>
               <div class="mb-3"><label>Contraseña</label><input type="password" id="loginPassword" class="form-control" required minlength="6"></div>
               <button class="btn btn-primary w-100">Iniciar Sesión</button>
             </form>
           </div>
+
           <div class="tab-pane fade" id="registerTab">
             <form id="formRegister">
               <div class="mb-3"><label>Nombre completo</label><input type="text" id="regNombre" class="form-control" required></div>
@@ -145,7 +267,9 @@
         <h5 class="modal-title">📦 Mis pedidos</h5>
         <button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
       </div>
-      <div class="modal-body" id="listaPedidos"></div>
+      <div class="modal-body">
+        <div id="listaPedidos"></div>
+      </div>
     </div>
   </div>
 </div>
@@ -158,14 +282,13 @@
 <!-- BOOTSTRAP JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-<!-- SCRIPT COMPLETO -->
 <script type="module">
-// ---------------- FIREBASE CONFIG ----------------
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
 import { getFirestore, doc, setDoc, addDoc, collection, getDocs, query, where, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-analytics.js";
 
+/* ================= FIREBASE CONFIG ================= */
 const firebaseConfig = {
   apiKey: "AIzaSyDBM97jFiC31LlofM_YOJY2l20YqAkxYWc",
   authDomain: "casa-zapatillas.firebaseapp.com",
@@ -175,7 +298,6 @@ const firebaseConfig = {
   appId: "1:912547598774:web:28f3708a71561f3c62b117",
   measurementId: "G-TGGF3N8RTD"
 };
-
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const auth = getAuth(app);
@@ -183,200 +305,217 @@ const db = getFirestore(app);
 const provider = new GoogleAuthProvider();
 provider.setCustomParameters({ prompt: "select_account" });
 
-// ---------------- ELEMENTOS ----------------
+/* ================== DOM ELEMENTS ================== */
 const googleBtn = document.getElementById("googleLogin");
 const loginForm = document.getElementById("formlogin");
 const registerForm = document.getElementById("formRegister");
 const loginItem = document.getElementById("loginItem");
-const carritoIcono = document.getElementById("btnCarritoIcono");
-let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
-// ---------------- FUNCIONES UTILES ----------------
-function guardarCarrito() {
-  localStorage.setItem("carrito", JSON.stringify(carrito));
-  actualizarContador();
-}
-
-function actualizarContador() {
-  const c = document.getElementById("contadorCarrito");
-  if (!c) return;
-  c.textContent = carrito.reduce((acc, i) => acc + i.cantidad, 0);
-}
-
-function renderCarrito() {
-  const lista = document.getElementById("listaCarrito");
-  const totalSpan = document.getElementById("totalCarrito");
-
-  lista.innerHTML = "";
-  let total = 0;
-  if (carrito.length === 0) { lista.innerHTML = '<p class="text-center">Tu carrito está vacío.</p>'; totalSpan.textContent = "S/ 0.00"; return; }
-
-  lista.innerHTML = `<div class="row fw-bold border-bottom pb-2 mb-2">
-      <div class="col-4">Producto</div>
-      <div class="col-2">Precio</div>
-      <div class="col-3">Cantidad</div>
-      <div class="col-3">Subtotal</div>
-    </div>`;
-
-  carrito.forEach((item, index) => {
-    const subtotal = item.precio * item.cantidad;
-    total += subtotal;
-    const row = document.createElement("div");
-    row.className = "row align-items-center border-bottom py-2";
-    row.innerHTML = `
-      <div class="col-4 d-flex align-items-center">
-        <img src="${item.img}" width="50" class="rounded me-2">
-        <div>${item.nombre}</div>
-      </div>
-      <div class="col-2">S/ ${item.precio.toFixed(2)}</div>
-      <div class="col-3 d-flex align-items-center">
-        <button class="btn btn-sm btn-outline-secondary me-2 btn-restar">-</button>
-        <span>${item.cantidad}</span>
-        <button class="btn btn-sm btn-outline-secondary ms-2 btn-sumar">+</button>
-      </div>
-      <div class="col-3 fw-bold">S/ ${subtotal.toFixed(2)}</div>
-      <div class="col-12 text-end mt-2">
-        <button class="btn btn-sm btn-danger btn-eliminar"><i class="bi bi-trash"></i></button>
-      </div>`;
-    row.querySelector(".btn-restar").addEventListener("click", () => cambiarCantidad(index, -1));
-    row.querySelector(".btn-sumar").addEventListener("click", () => cambiarCantidad(index, 1));
-    row.querySelector(".btn-eliminar").addEventListener("click", () => eliminarItem(index));
-    lista.appendChild(row);
-  });
-  totalSpan.textContent = `S/ ${total.toFixed(2)}`;
-}
-
-function cambiarCantidad(index, value) {
-  carrito[index].cantidad += value;
-  if (carrito[index].cantidad <= 0) carrito.splice(index, 1);
-  guardarCarrito();
-  renderCarrito();
-}
-
-function eliminarItem(index) {
-  carrito.splice(index, 1);
-  guardarCarrito();
-  renderCarrito();
-}
-
-// ---------------- EVENTOS ----------------
-carritoIcono.addEventListener("click", () => {
-  if (!auth.currentUser) { new bootstrap.Modal(document.getElementById("authModal")).show(); return; }
-  renderCarrito();
-  new bootstrap.Modal(document.getElementById("modalCarrito")).show();
-});
-
-document.querySelectorAll(".addToCart").forEach(btn => {
-  btn.addEventListener("click", e => {
-    if (!auth.currentUser) { new bootstrap.Modal(document.getElementById("authModal")).show(); return; }
-    const card = e.target.closest(".card");
-    const nombre = card.querySelector(".card-title").textContent;
-    const precio = parseFloat(card.querySelector(".fw-bold").textContent.replace(/S?\//i, ""));
-    const img = card.querySelector("img").src;
-    const existe = carrito.find(p => p.nombre === nombre);
-    if (existe) existe.cantidad++; else carrito.push({ nombre, precio, img, cantidad: 1 });
-    guardarCarrito();
-    document.getElementById("alertaAgregado").style.display = "block";
-    setTimeout(() => { document.getElementById("alertaAgregado").style.display = "none"; }, 1500);
-  });
-});
-
-// ---------------- COMPRAR ----------------
-document.getElementById("btnComprar").addEventListener("click", async () => {
-  if (!auth.currentUser) { new bootstrap.Modal(document.getElementById("authModal")).show(); return; }
-  if (carrito.length === 0) { alert("El carrito está vacío."); return; }
-  try {
-    const uid = auth.currentUser.uid;
-    await addDoc(collection(db, "Pedidos"), { uid, items: carrito, total: carrito.reduce((acc, i) => acc + i.precio * i.cantidad, 0), createdAt: serverTimestamp() });
-    carrito = []; guardarCarrito(); renderCarrito();
-    new bootstrap.Modal(document.getElementById("modalCarrito")).hide();
-    alert("Pedido registrado correctamente. ¡Revisa tus pedidos!");
-  } catch (err) { console.error(err); alert("Error al guardar tu pedido"); }
-});
-
-// ---------------- CARGAR PEDIDOS ----------------
-async function cargarPedidosUsuario() {
-  const user = auth.currentUser;
-  if (!user) { new bootstrap.Modal(document.getElementById("authModal")).show(); return; }
-  const lista = document.getElementById("listaPedidos");
-  lista.innerHTML = `<p class="text-center">Cargando pedidos...</p>`;
-  try {
-    const q = query(collection(db, "Pedidos"), where("uid", "==", user.uid));
-    const snap = await getDocs(q);
-    const pedidos = [];
-    snap.forEach(doc => pedidos.push({ id: doc.id, ...doc.data() }));
-    pedidos.sort((a,b) => (b.createdAt?.toMillis?.()||0) - (a.createdAt?.toMillis?.()||0));
-    lista.innerHTML = pedidos.length === 0 ? `<p class="text-center">No tienes pedidos.</p>` : pedidos.map((p,i)=>renderPedidoHtml(p,i+1)).join("");
-    new bootstrap.Modal(document.getElementById("modalPedidos")).show();
-  } catch(err){ console.error(err); lista.innerHTML = `<p class="text-center text-danger">Error al cargar pedidos</p>`; }
-}
-
-function renderPedidoHtml(p, numero) {
-  const fecha = p.createdAt?.toDate?.() ? p.createdAt.toDate().toLocaleString() : "Sin fecha";
-  let itemsHtml = "";
-  (p.items||[]).forEach(i=>{
-    itemsHtml += `<div class="pedido-item d-flex justify-content-between align-items-center mb-2">
-      <div class="d-flex align-items-center">
-        <img src="${i.img}" width="50" class="me-2 rounded">
-        <div><strong>${i.nombre}</strong><br><small>Cantidad: ${i.cantidad}</small></div>
-      </div>
-      <div><strong>S/ ${(i.precio*i.cantidad).toFixed(2)}</strong></div>
-    </div>`;
-  });
-  return `<div class="pedido-card border p-2 mb-3 rounded">
-    <div class="pedido-header fw-bold">Pedido #${numero}</div>
-    <div><strong>Fecha:</strong> ${fecha}</div>
-    <hr>
-    ${itemsHtml}
-    <div class="text-end mt-2"><h5>Total: S/ ${p.total?.toFixed(2)||"0.00"}</h5></div>
-  </div>`;
-}
-
-// ---------------- AUTENTICACION ----------------
+/* ================== LOGIN GOOGLE ================== */
 googleBtn.addEventListener("click", async () => {
   try {
     const result = await signInWithPopup(auth, provider);
     const user = result.user;
-    await setDoc(doc(db,"usuarios",user.uid), { uid:user.uid, nombre:user.displayName, email:user.email, foto:user.photoURL }, {merge:true});
-    new bootstrap.Modal(document.getElementById("authModal")).hide();
-    alert("Hola, Bienvenido "+(user.displayName||user.email));
-  } catch(err){ alert("Error al iniciar sesión con Google"); console.error(err); }
+    await setDoc(doc(db, "usuarios", user.uid), {
+      uid: user.uid,
+      nombre: user.displayName,
+      email: user.email,
+      foto: user.photoURL
+    }, { merge: true });
+    cerrarModalAuth();
+    alert("Hola, Bienvenido " + (user.displayName || user.email));
+  } catch (err) {
+    alert("Error al iniciar sesión con Google");
+    console.error(err);
+  }
 });
 
-registerForm.addEventListener("submit", async e=>{
+/* ================== REGISTRO EMAIL ================== */
+registerForm.addEventListener("submit", async e => {
   e.preventDefault();
   const nombre = regNombre.value.trim();
   const email = regEmail.value.trim();
   const pass = regPassword.value;
+
   try {
-    const cred = await createUserWithEmailAndPassword(auth,email,pass);
+    const cred = await createUserWithEmailAndPassword(auth, email, pass);
     const user = cred.user;
-    await setDoc(doc(db,"usuarios",user.uid), { uid:user.uid, nombre, email, foto:`https://ui-avatars.com/api/?name=${encodeURIComponent(nombre)}&background=random` });
-    new bootstrap.Modal(document.getElementById("authModal")).hide();
-    alert("Registro exitoso. Bienvenido "+nombre);
-  } catch(err){ alert("Error en registro: "+err.message); }
+    await setDoc(doc(db, "usuarios", user.uid), {
+      uid: user.uid,
+      nombre,
+      email,
+      foto: `https://ui-avatars.com/api/?name=${encodeURIComponent(nombre)}&background=random`
+    });
+    cerrarModalAuth();
+    alert("Registro exitoso. Bienvenido " + nombre);
+  } catch (err) {
+    alert("Error en registro: " + err.message);
+  }
 });
 
-loginForm.addEventListener("submit", async e=>{
+/* ================== LOGIN EMAIL ================== */
+loginForm.addEventListener("submit", async e => {
   e.preventDefault();
   try {
     const email = loginEmail.value.trim();
     const password = loginPassword.value.trim();
-    const cred = await signInWithEmailAndPassword(auth,email,password);
-    new bootstrap.Modal(document.getElementById("authModal")).hide();
-    alert("Hola, Bienvenido "+(cred.user.displayName||email));
-  } catch(err){ alert("Usuario o contraseña incorrecta"); }
+    const cred = await signInWithEmailAndPassword(auth, email, password);
+    cerrarModalAuth();
+    alert("Hola, Bienvenido " + (cred.user.displayName || email));
+  } catch (err) {
+    alert("Usuario o contraseña incorrecta");
+  }
 });
 
-onAuthStateChanged(auth,user=>{
-  if(user){ loginItem.classList.add("d-none"); }
-  else{ loginItem.classList.remove("d-none"); }
+/* ================== NAVBAR ================== */
+function cerrarModalAuth() {
+  const modal = bootstrap.Modal.getInstance(document.getElementById("authModal"));
+  if (modal) modal.hide();
+}
+
+function pintarUsuarioNavbar(user) {
+  if (document.getElementById("userinfo")) return;
+
+  const foto = user.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.displayName || user.email)}`;
+  const nombre = user.displayName || user.email;
+
+  const li = document.createElement("li");
+  li.className = "nav-item dropdown ms-3 d-flex align-items-center";
+  li.id = "userinfo";
+
+  li.innerHTML = `
+    <button class="btn btn-link position-relative me-3 text-white" id="btnCarritoIcono">
+      <i class="bi bi-cart3 fs-5 text-white"></i>
+      <span id="contadorCarrito" class="badge rounded-pill bg-danger position-absolute top-0 start-100 translate-middle">0</span>
+    </button>
+
+    <a class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
+      <img src="${foto}" class="rounded-circle me-2" width="32" height="32">
+      <span class="text-white">${nombre}</span>
+    </a>
+
+    <ul class="dropdown-menu dropdown-menu-end">
+      <li><a class="dropdown-item" id="misPedidosBtn">Mis pedidos</a></li>
+      <li><hr class="dropdown-divider"></li>
+      <li><a class="dropdown-item text-danger" id="cerrarSesionBtn">Cerrar sesión</a></li>
+    </ul>
+  `;
+
+  document.querySelector(".navbar-nav").appendChild(li);
+
+  document.getElementById("cerrarSesionBtn").addEventListener("click", async () => {
+    await signOut(auth);
+  });
+
+  document.getElementById("misPedidosBtn").addEventListener("click", async () => {
+    await cargarPedidosUsuario();
+    const modal = new bootstrap.Modal(document.getElementById("modalPedidos"));
+    modal.show();
+  });
+
+  // ABRIR MODAL CARRITO
+  const btnCarrito = document.getElementById("btnCarritoIcono");
+  btnCarrito.addEventListener("click", () => {
+    renderCarrito();
+    const modalCarrito = new bootstrap.Modal(document.getElementById("modalCarrito"));
+    modalCarrito.show();
+  });
+
+  actualizarContador();
+}
+
+/* ================== CARRITO ================== */
+let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+
+function actualizarContador() {
+  const contador = document.getElementById("contadorCarrito");
+  if (contador) contador.textContent = carrito.length;
+}
+
+function renderCarrito() {
+  const lista = document.getElementById("listaCarrito");
+  lista.innerHTML = "";
+  let total = 0;
+  carrito.forEach((p, i) => {
+    total += p.precio;
+    const div = document.createElement("div");
+    div.className = "d-flex justify-content-between align-items-center border-bottom py-2";
+    div.innerHTML = `
+      <div class="d-flex align-items-center">
+        <img src="${p.img}" width="50" height="50" class="me-2 rounded">
+        <span>${p.nombre}</span>
+      </div>
+      <span class="fw-bold">S/ ${p.precio}</span>
+    `;
+    lista.appendChild(div);
+  });
+  document.getElementById("totalCarrito").textContent = "S/ " + total.toFixed(2);
+}
+
+/* AGREGAR PRODUCTOS */
+document.querySelectorAll(".addToCart").forEach((btn, index) => {
+  btn.addEventListener("click", e => {
+    const card = btn.closest(".card");
+    const nombre = card.querySelector(".card-title").textContent;
+    const precio = parseFloat(card.querySelector(".fw-bold").textContent.replace("s/", "").trim());
+    const img = card.querySelector("img").src;
+
+    carrito.push({ nombre, precio, img });
+    localStorage.setItem("carrito", JSON.stringify(carrito));
+    renderCarrito();
+    actualizarContador();
+    document.getElementById("alertaAgregado").style.display = "block";
+    setTimeout(() => document.getElementById("alertaAgregado").style.display = "none", 1500);
+  });
 });
 
-actualizarContador();
-renderCarrito();
+/* ================== PEDIDOS ================== */
+async function cargarPedidosUsuario() {
+  const user = auth.currentUser;
+  if (!user) {
+    alert("Debes iniciar sesión para ver tus pedidos");
+    return;
+  }
+  const q = query(collection(db, "pedidos"), where("uid", "==", user.uid));
+  const querySnapshot = await getDocs(q);
+  const lista = document.getElementById("listaPedidos");
+  lista.innerHTML = "";
+  if (querySnapshot.empty) lista.innerHTML = "<p>No tienes pedidos aún</p>";
+  querySnapshot.forEach(docu => {
+    const data = docu.data();
+    const div = document.createElement("div");
+    div.className = "pedido-card";
+    div.innerHTML = `
+      <div class="pedido-header">Pedido #${docu.id}</div>
+      ${data.items.map(item => `
+        <div class="pedido-item">
+          <div class="d-flex align-items-center">
+            <img src="${item.img}">
+            <span>${item.nombre}</span>
+          </div>
+          <span>S/ ${item.precio}</span>
+        </div>`).join("")}
+    `;
+    lista.appendChild(div);
+  });
+}
 
+/* ================== AUTH STATE ================== */
+onAuthStateChanged(auth, user => {
+  if (user) {
+    loginItem.style.display = "none";
+    pintarUsuarioNavbar(user);
+  } else {
+    loginItem.style.display = "block";
+    const info = document.getElementById("userinfo");
+    if (info) info.remove();
+  }
+});
+
+/* ================== INICIAL ================== */
+document.addEventListener("DOMContentLoaded", () => {
+  actualizarContador();
+});
 </script>
-
 </body>
 </html>
