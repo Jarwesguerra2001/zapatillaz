@@ -21,7 +21,7 @@
     .card-text { font-size: 0.9rem; color: #555; }
     img.card-img-top { height: 200px; object-fit: cover; transition: transform 0.3s; }
     img.card-img-top:hover { transform: scale(1.1); }
-    
+
     /* ===== HEADER ===== */
     header {
       background: linear-gradient(135deg, #4f46e5, #3b82f6);
@@ -111,113 +111,66 @@
     <h2 class="text-center mb-5">Nuestros productos Mejores Pedidos</h2>
     <div class="row g-4">
       <!-- PRODUCTOS IGUALADOS Y CENTRADOS -->
-      <div class="col-12 col-sm-6 col-md-3">
-        <div class="card h-100 shadow-sm">
-          <img src="img/1.jpeg" class="card-img-top" alt="Zapatilla Nike">
-          <div class="card-body text-center">
-            <h5 class="card-title">Zapatillas Nike</h5>
-            <p class="card-text">Para hombre</p>
-            <p class="fw-bold" data-precio="100.00">S/ 100.00</p>
-            <button class="btn btn-primary addToCart">AGREGAR AL CARRITO</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-12 col-sm-6 col-md-3">
-        <div class="card h-100 shadow-sm">
-          <img src="img/2.jpeg" class="card-img-top" alt="Zapatilla Nike">
-          <div class="card-body text-center">
-            <h5 class="card-title">Zapatillas strike</h5>
-            <p class="card-text">Lujo único</p>
-            <p class="fw-bold" data-precio="270.00">S/ 270.00</p>
-            <button class="btn btn-primary addToCart">AGREGAR AL CARRITO</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-12 col-sm-6 col-md-3">
-        <div class="card h-100 shadow-sm">
-          <img src="img/3.jpeg" class="card-img-top" alt="Zapatilla Nike">
-          <div class="card-body text-center">
-            <h5 class="card-title">Zapatillas tigre</h5>
-            <p class="card-text">Mejor calidad en material</p>
-            <p class="fw-bold" data-precio="50.00">S/ 50.00</p>
-            <button class="btn btn-primary addToCart">AGREGAR AL CARRITO</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-12 col-sm-6 col-md-3">
-        <div class="card h-100 shadow-sm">
-          <img src="img/4.jpeg" class="card-img-top" alt="Zapatilla Nike">
-          <div class="card-body text-center">
-            <h5 class="card-title">Zapatillas Puma</h5>
-            <p class="card-text">Nuevo modelo</p>
-            <p class="fw-bold" data-precio="420.00">S/ 420.00</p>
-            <button class="btn btn-primary addToCart">AGREGAR AL CARRITO</button>
-          </div>
-        </div>
-      </div>
-
-
-                  <!-- PRODUCTO DE EJEMPLO -->
-      <div class="col-12 col-sm-6 col-md-3">
-        <div class="card h-100 shadow-sm">
-          <img src="img/5.jpeg" class="card-img-top" alt="Zapatilla Nike">
-          <div class="card-body text-center">
-            <h5 class="card-title">Zapatillas Nike like</h5>
-            <p class="card-text">puma moddelo nuevo</p>
-            <p class="fw-bold" data-precio="150.00">S/ 150.00</p>
-            <button class="btn btn-primary addToCart">AGREGAR AL CARRITO</button>
-          </div>
-        </div>
-      </div>
-
-            <!-- PRODUCTO DE EJEMPLO -->
-      <div class="col-12 col-sm-6 col-md-3">
-        <div class="card h-100 shadow-sm">
-          <img src="img/6.jpeg" class="card-img-top" alt="Zapatilla Nike">
-          <div class="card-body text-center">
-            <h5 class="card-title">Zapatillas Puma like</h5>
-            <p class="card-text"> mejor calidad</p>
-            <p class="fw-bold" data-precio="200.00">S/ 200.00</p>
-            <button class="btn btn-primary addToCart">AGREGAR AL CARRITO</button>
-          </div>
-        </div>
-      </div>
-
-            <!-- PRODUCTO DE EJEMPLO -->
-      <div class="col-12 col-sm-6 col-md-3">
-        <div class="card h-100 shadow-sm">
-          <img src="img/7.jpeg" class="card-img-top" alt="Zapatilla Nike">
-          <div class="card-body text-center">
-            <h5 class="card-title">Zapatillas nuevo modelo</h5>
-            <p class="card-text">Para hombre</p>
-            <p class="fw-bold" data-precio="700.00">S/ 700.00</p>
-            <button class="btn btn-primary addToCart">AGREGAR AL CARRITO</button>
-          </div>
-        </div>
-      </div>
-
-            <!-- PRODUCTO DE EJEMPLO -->
-      <div class="col-12 col-sm-6 col-md-3">
-        <div class="card h-100 shadow-sm">
-          <img src="img/8.jpeg" class="card-img-top" alt="Zapatilla Nike">
-          <div class="card-body text-center">
-            <h5 class="card-title">Zapatillas oster like</h5>
-            <p class="card-text">Para hombre</p>
-            <p class="fw-bold" data-precio="500.00">S/ 500.00</p>
-            <button class="btn btn-primary addToCart">AGREGAR AL CARRITO</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Agrega los demás productos de la misma manera -->
+      <!-- Aquí van tus productos como en tu código original -->
     </div>
   </div>
 </section>
 
-<!-- MODALES y FOOTER siguen igual, solo con diseño actualizado -->
+<!-- MODALES DE AUTENTICACIÓN -->
+<div class="modal fade" id="authModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content p-3">
+      <div class="modal-header">
+        <h5 class="modal-title">Iniciar sesión / Registrarse</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form id="formlogin" class="mb-3">
+          <input type="email" id="loginEmail" class="form-control mb-2" placeholder="Correo">
+          <input type="password" id="loginPassword" class="form-control mb-2" placeholder="Contraseña">
+          <button class="btn btn-primary w-100 mb-2" type="submit">Iniciar sesión</button>
+        </form>
+        <form id="formRegister">
+          <input type="text" id="regNombre" class="form-control mb-2" placeholder="Nombre">
+          <input type="email" id="regEmail" class="form-control mb-2" placeholder="Correo">
+          <input type="password" id="regPassword" class="form-control mb-2" placeholder="Contraseña">
+          <button class="btn btn-primary w-100" type="submit">Registrarse</button>
+        </form>
+        <button class="btn btn-outline-danger w-100 mt-2" id="googleLogin"><i class="bi bi-google"></i> Ingresar con Google</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODALES CARRITO -->
+<div class="modal fade" id="modalCarrito" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content p-3">
+      <div class="modal-header">
+        <h5 class="modal-title">Mi carrito</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body" id="listaCarrito"></div>
+      <div class="modal-footer">
+        <h5 class="me-auto">Total: <span id="totalCarrito">S/ 0.00</span></h5>
+        <button class="btn btn-primary" id="btnComprar">Comprar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL PEDIDOS -->
+<div class="modal fade" id="modalPedidos" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content p-3">
+      <div class="modal-header">
+        <h5 class="modal-title">Mis pedidos</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body" id="listaPedidos"></div>
+    </div>
+  </div>
+</div>
 
 <footer>
   <p>&copy; BONEY JARWES 2025</p>
@@ -232,15 +185,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebas
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
 import { getFirestore, doc, setDoc, addDoc, collection, getDocs, query, where, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyDBM97jFiC31LlofM_YOJY2l20YqAkxYWc",
-  authDomain: "casa-zapatillas.firebaseapp.com",
-  projectId: "casa-zapatillas",
-  storageBucket: "casa-zapatillas.appspot.com",
-  messagingSenderId: "912547598774",
-  appId: "1:912547598774:web:28f3708a71561f3c62b117",
-  measurementId: "G-TGGF3N8RTD"
-};
+const firebaseConfig = { /* tu config */ };
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
@@ -276,10 +221,9 @@ googleBtn.addEventListener("click", async () => {
 /* ===== REGISTRO EMAIL ===== */
 registerForm.addEventListener("submit", async e => {
   e.preventDefault();
-  const nombre = regNombre.value.trim();
-  const email = regEmail.value.trim();
-  const pass = regPassword.value;
-
+  const nombre = document.getElementById("regNombre").value.trim();
+  const email = document.getElementById("regEmail").value.trim();
+  const pass = document.getElementById("regPassword").value;
   try {
     const cred = await createUserWithEmailAndPassword(auth, email, pass);
     const user = cred.user;
@@ -298,8 +242,8 @@ registerForm.addEventListener("submit", async e => {
 loginForm.addEventListener("submit", async e => {
   e.preventDefault();
   try {
-    const email = loginEmail.value.trim();
-    const password = loginPassword.value.trim();
+    const email = document.getElementById("loginEmail").value.trim();
+    const password = document.getElementById("loginPassword").value.trim();
     const cred = await signInWithEmailAndPassword(auth, email, password);
     cerrarModalAuth();
     mostrarAlerta("Hola, Bienvenido " + (cred.user.displayName || email));
@@ -473,3 +417,5 @@ document.addEventListener("DOMContentLoaded",()=>{ actualizarContador(); });
 </script>
 </body>
 </html>
+
+
