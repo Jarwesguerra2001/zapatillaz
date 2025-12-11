@@ -82,7 +82,8 @@
   <div class="container">
     <h2 class="text-center mb-4">Nuestros productos Mejores Pedidos</h2>
     <div class="row g-4">
-      <!-- PRODUCTO DE EJEMPLO -->
+      <!-- PRODUCTOS DE EJEMPLO -->
+      <!-- Puedes repetir o agregar más productos según necesites -->
       <div class="col-12 col-sm-6 col-md-3">
         <div class="card h-100 shadow-sm">
           <img src="img/1.jpeg" class="card-img-top" alt="Zapatilla Nike">
@@ -94,98 +95,7 @@
           </div>
         </div>
       </div>
-
-            <!-- PRODUCTO DE EJEMPLO -->
-      <div class="col-12 col-sm-6 col-md-3">
-        <div class="card h-100 shadow-sm">
-          <img src="img/2.jpeg" class="card-img-top" alt="Zapatilla Nike">
-          <div class="card-body text-center">
-            <h5 class="card-title">Zapatillas strike</h5>
-            <p class="card-text">lujo unico</p>
-            <p class="fw-bold" data-precio="270.00">S/270.00</p>
-            <button class="btn btn-primary addToCart">AGREGAR AL CARRITO</button>
-          </div>
-        </div>
-      </div>
-
-            <!-- PRODUCTO DE EJEMPLO -->
-      <div class="col-12 col-sm-6 col-md-3">
-        <div class="card h-100 shadow-sm">
-          <img src="img/3.jpeg" class="card-img-top" alt="Zapatilla Nike">
-          <div class="card-body text-center">
-            <h5 class="card-title">Zapatillas tigre</h5>
-            <p class="card-text">mejor calidad en material</p>
-            <p class="fw-bold" data-precio="50.00">S/ 50.00</p>
-            <button class="btn btn-primary addToCart">AGREGAR AL CARRITO</button>
-          </div>
-        </div>
-      </div>
-
-            <!-- PRODUCTO DE EJEMPLO -->
-      <div class="col-12 col-sm-6 col-md-3">
-        <div class="card h-100 shadow-sm">
-          <img src="img/4.jpeg" class="card-img-top" alt="Zapatilla Nike">
-          <div class="card-body text-center">
-            <h5 class="card-title">Zapatillas Puma</h5>
-            <p class="card-text">nuevo modelo</p>
-            <p class="fw-bold" data-precio="420.00">S/ 420.00</p>
-            <button class="btn btn-primary addToCart">AGREGAR AL CARRITO</button>
-          </div>
-        </div>
-      </div>
-
-            <!-- PRODUCTO DE EJEMPLO -->
-      <div class="col-12 col-sm-6 col-md-3">
-        <div class="card h-100 shadow-sm">
-          <img src="img/5.jpeg" class="card-img-top" alt="Zapatilla Nike">
-          <div class="card-body text-center">
-            <h5 class="card-title">Zapatillas Nike like</h5>
-            <p class="card-text">puma moddelo nuevo</p>
-            <p class="fw-bold" data-precio="150.00">S/ 150.00</p>
-            <button class="btn btn-primary addToCart">AGREGAR AL CARRITO</button>
-          </div>
-        </div>
-      </div>
-
-            <!-- PRODUCTO DE EJEMPLO -->
-      <div class="col-12 col-sm-6 col-md-3">
-        <div class="card h-100 shadow-sm">
-          <img src="img/6.jpeg" class="card-img-top" alt="Zapatilla Nike">
-          <div class="card-body text-center">
-            <h5 class="card-title">Zapatillas Puma like</h5>
-            <p class="card-text"> mejor calidad</p>
-            <p class="fw-bold" data-precio="200.00">S/ 200.00</p>
-            <button class="btn btn-primary addToCart">AGREGAR AL CARRITO</button>
-          </div>
-        </div>
-      </div>
-
-            <!-- PRODUCTO DE EJEMPLO -->
-      <div class="col-12 col-sm-6 col-md-3">
-        <div class="card h-100 shadow-sm">
-          <img src="img/7.jpeg" class="card-img-top" alt="Zapatilla Nike">
-          <div class="card-body text-center">
-            <h5 class="card-title">Zapatillas nuevo modelo</h5>
-            <p class="card-text">Para hombre</p>
-            <p class="fw-bold" data-precio="700.00">S/ 700.00</p>
-            <button class="btn btn-primary addToCart">AGREGAR AL CARRITO</button>
-          </div>
-        </div>
-      </div>
-
-            <!-- PRODUCTO DE EJEMPLO -->
-      <div class="col-12 col-sm-6 col-md-3">
-        <div class="card h-100 shadow-sm">
-          <img src="img/8.jpeg" class="card-img-top" alt="Zapatilla Nike">
-          <div class="card-body text-center">
-            <h5 class="card-title">Zapatillas oster like</h5>
-            <p class="card-text">Para hombre</p>
-            <p class="fw-bold" data-precio="500.00">S/ 500.00</p>
-            <button class="btn btn-primary addToCart">AGREGAR AL CARRITO</button>
-          </div>
-        </div>
-      </div>
-      <!-- Agregar más productos similares -->
+      <!-- Más productos similares... -->
     </div>
   </div>
 </section>
@@ -274,6 +184,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebas
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
 import { getFirestore, doc, setDoc, addDoc, collection, getDocs, query, where, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
 
+// Configuración Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyDBM97jFiC31LlofM_YOJY2l20YqAkxYWc",
   authDomain: "casa-zapatillas.firebaseapp.com",
@@ -289,12 +200,13 @@ const db = getFirestore(app);
 const provider = new GoogleAuthProvider();
 provider.setCustomParameters({ prompt: "select_account" });
 
+// ELEMENTOS DOM
 const googleBtn = document.getElementById("googleLogin");
 const loginForm = document.getElementById("formlogin");
 const registerForm = document.getElementById("formRegister");
 const loginItem = document.getElementById("loginItem");
 
-/* ===== ALERTAS ===== */
+// ===== ALERTAS =====
 function mostrarAlerta(msg, color="green") {
   const toastEl = document.getElementById("alertaAgregado");
   const msgEl = document.getElementById("msgAlerta");
@@ -304,7 +216,7 @@ function mostrarAlerta(msg, color="green") {
   setTimeout(()=>{ toastEl.style.display="none"; },2000);
 }
 
-/* ===== LOGIN GOOGLE ===== */
+// ===== LOGIN GOOGLE =====
 googleBtn.addEventListener("click", async () => {
   try {
     const result = await signInWithPopup(auth, provider);
@@ -315,7 +227,7 @@ googleBtn.addEventListener("click", async () => {
   } catch (err) { mostrarAlerta("Error al iniciar sesión con Google", "red"); console.error(err); }
 });
 
-/* ===== REGISTRO EMAIL ===== */
+// ===== REGISTRO EMAIL =====
 registerForm.addEventListener("submit", async e => {
   e.preventDefault();
   const nombre = regNombre.value.trim();
@@ -336,7 +248,7 @@ registerForm.addEventListener("submit", async e => {
   } catch (err) { mostrarAlerta("Error en registro: " + err.message, "red"); }
 });
 
-/* ===== LOGIN EMAIL ===== */
+// ===== LOGIN EMAIL =====
 loginForm.addEventListener("submit", async e => {
   e.preventDefault();
   try {
@@ -348,7 +260,7 @@ loginForm.addEventListener("submit", async e => {
   } catch (err) { mostrarAlerta("Usuario o contraseña incorrecta", "red"); }
 });
 
-/* ===== NAVBAR ===== */
+// ===== NAVBAR =====
 function cerrarModalAuth() {
   const modal = bootstrap.Modal.getInstance(document.getElementById("authModal"));
   if (modal) modal.hide();
@@ -395,7 +307,7 @@ function pintarUsuarioNavbar(user) {
   actualizarContador();
 }
 
-/* ===== CARRITO ===== */
+// ===== CARRITO =====
 let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
 function actualizarContador() {
@@ -445,7 +357,7 @@ function guardarCarrito() {
   renderCarrito(); actualizarContador();
 }
 
-/* ===== AGREGAR PRODUCTOS ===== */
+// ===== AGREGAR PRODUCTOS =====
 document.querySelectorAll(".addToCart").forEach(btn => {
   btn.addEventListener("click", () => {
     const card = btn.closest(".card");
@@ -459,7 +371,7 @@ document.querySelectorAll(".addToCart").forEach(btn => {
   });
 });
 
-/* ===== PAGAR ===== */
+// ===== PAGAR =====
 document.getElementById("btnComprar").addEventListener("click", async () => {
   const user = auth.currentUser;
   if(!user){ mostrarAlerta("Debes iniciar sesión para pagar", "red"); return; }
@@ -477,7 +389,7 @@ document.getElementById("btnComprar").addEventListener("click", async () => {
   }catch(err){ mostrarAlerta("Error al realizar el pedido: "+err.message, "red"); }
 });
 
-/* ===== PEDIDOS ===== */
+// ===== PEDIDOS =====
 async function cargarPedidosUsuario(){
   const user = auth.currentUser;
   if(!user){ mostrarAlerta("Debes iniciar sesión para ver tus pedidos", "red"); return; }
@@ -505,7 +417,7 @@ async function cargarPedidosUsuario(){
   });
 }
 
-/* ===== ESTADO DE SESIÓN ===== */
+// ===== ESTADO DE SESIÓN =====
 onAuthStateChanged(auth,user=>{
   if(user){ loginItem.style.display="none"; pintarUsuarioNavbar(user); }
   else{ loginItem.style.display="block"; const info=document.getElementById("userinfo"); if(info) info.remove(); }
