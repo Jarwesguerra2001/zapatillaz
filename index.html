@@ -8,18 +8,53 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <style>
-    .pedido-card { border: 1px solid #ddd; background: #fff; border-radius: 10px; padding: 15px; margin-bottom: 20px; }
-    .pedido-header { font-size: 18px; font-weight: bold; margin-bottom: 10px; }
-    .pedido-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #eee; }
+    .pedido-card {
+      border: 1px solid #ddd;
+      background: #fff;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 20px;
+    }
+    .pedido-header {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .pedido-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid #eee;
+    }
     .pedido-item:last-child { border-bottom: none; }
     .pedido-item img { width: 60px; height: 60px; border-radius: 8px; margin-right: 12px; }
-    #alertaAgregado { position: fixed; top: 20px; right: 20px; z-index: 2000; display: none; padding: 10px 14px; border-radius: 6px; font-weight: 600; box-shadow: 0 4px 10px rgba(0,0,0,.15); background-color: green; color: white; }
+
+    /* Toasts alertas */
+    #alertaAgregado {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 2000;
+      display: none;
+      padding: 10px 14px;
+      border-radius: 6px;
+      font-weight: 600;
+      box-shadow: 0 4px 10px rgba(0,0,0,.15);
+      color: white;
+    }
   </style>
 </head>
 
 <body>
 
-<div id="alertaAgregado" class="alert alert-success"></div>
+<!-- ALERTA -->
+<div id="alertaAgregado" class="toast align-items-center" role="alert" aria-live="assertive" aria-atomic="true">
+  <div class="d-flex">
+    <div class="toast-body" id="msgAlerta"></div>
+    <button type="button" class="btn-close btn-close-white me-2 m-auto" onclick="cerrarAlerta()"></button>
+  </div>
+</div>
 
 <!-- NAVBAR -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -45,7 +80,7 @@
 <header class="bg-primary text-white text-center py-5">
   <div class="container">
     <h1 class="display-4">Bienvenido A tu tienda de ZAPATITLLAS BONEY JARWES</h1>
-    <p class="lead">TU tienda a un mejor precio y calidad única</p>
+    <p class="lead">TU tienda a un mejor precio y calidad unica</p>
   </div>
 </header>
 
@@ -54,8 +89,8 @@
   <div class="container">
     <h2 class="text-center mb-4">Nuestros productos a un buen precio</h2>
     <div class="row g-4">
-
-      <!-- EJEMPLO DE PRODUCTO -->
+      <!-- PRODUCTOS -->
+      <!-- Repetir según necesidad -->
       <div class="col-12 col-sm-6 col-md-3">
         <div class="card h-80 shadow-sm">
           <img src="img/1.jpeg" class="card-img-top" alt="camisa">
@@ -67,10 +102,7 @@
           </div>
         </div>
       </div>
-
-      <!-- MÁS PRODUCTOS... -->
-      <!-- Repite el bloque anterior cambiando imagen, nombre y precio -->
-
+      <!-- Más productos... -->
     </div>
   </div>
 </section>
@@ -181,34 +213,31 @@ const loginForm = document.getElementById("formlogin");
 const registerForm = document.getElementById("formRegister");
 const loginItem = document.getElementById("loginItem");
 
-/* ===== FUNCIONES ===== */
+/* ===== ALERTAS TIPO TOAST ===== */
 function mostrarAlerta(msg, color="green") {
-  const alerta = document.getElementById("alertaAgregado");
-  alerta.style.backgroundColor = color;
-  alerta.textContent = msg;
-  alerta.style.display = "block";
-  setTimeout(()=>alerta.style.display="none", 2000);
+  const toastEl = document.getElementById("alertaAgregado");
+  const msgEl = document.getElementById("msgAlerta");
+  msgEl.textContent = msg;
+  toastEl.style.backgroundColor = color;
+  toastEl.style.display="block";
+  setTimeout(()=>{ toastEl.style.display="none"; },2000);
 }
-
-function cerrarModalAuth() {
-  const modal = bootstrap.Modal.getInstance(document.getElementById("authModal"));
-  if(modal) modal.hide();
-}
+function cerrarAlerta(){ document.getElementById("alertaAgregado").style.display="none"; }
 
 /* ===== LOGIN GOOGLE ===== */
 googleBtn.addEventListener("click", async () => {
   try {
     const result = await signInWithPopup(auth, provider);
     const user = result.user;
-    await setDoc(doc(db,"usuarios",user.uid),{
-      uid:user.uid,
-      nombre:user.displayName,
-      email:user.email,
-      foto:user.photoURL
-    },{merge:true});
+    await setDoc(doc(db, "usuarios", user.uid), {
+      uid: user.uid,
+      nombre: user.displayName,
+      email: user.email,
+      foto: user.photoURL
+    }, { merge: true });
     cerrarModalAuth();
-    mostrarAlerta("Bienvenido " + (user.displayName||user.email));
-  } catch(err){ console.error(err); mostrarAlerta("Error al iniciar sesión con Google", "red"); }
+    mostrarAlerta("Hola, Bienvenido " + (user.displayName || user.email));
+  } catch (err) { mostrarAlerta("Error al iniciar sesión con Google", "red"); console.error(err); }
 });
 
 /* ===== REGISTRO EMAIL ===== */
@@ -217,37 +246,44 @@ registerForm.addEventListener("submit", async e => {
   const nombre = regNombre.value.trim();
   const email = regEmail.value.trim();
   const pass = regPassword.value;
-  try{
-    const cred = await createUserWithEmailAndPassword(auth,email,pass);
+
+  try {
+    const cred = await createUserWithEmailAndPassword(auth, email, pass);
     const user = cred.user;
-    await setDoc(doc(db,"usuarios",user.uid),{
-      uid:user.uid,
+    await setDoc(doc(db, "usuarios", user.uid), {
+      uid: user.uid,
       nombre,
       email,
-      foto:`https://ui-avatars.com/api/?name=${encodeURIComponent(nombre)}&background=random`
+      foto: `https://ui-avatars.com/api/?name=${encodeURIComponent(nombre)}&background=random`
     });
     cerrarModalAuth();
     mostrarAlerta("Registro exitoso. Bienvenido " + nombre);
-  }catch(err){ console.error(err); mostrarAlerta("Error en registro: " + err.message,"red"); }
+  } catch (err) { mostrarAlerta("Error en registro: " + err.message, "red"); }
 });
 
 /* ===== LOGIN EMAIL ===== */
 loginForm.addEventListener("submit", async e => {
   e.preventDefault();
-  try{
+  try {
     const email = loginEmail.value.trim();
-    const pass = loginPassword.value.trim();
-    const cred = await signInWithEmailAndPassword(auth,email,pass);
+    const password = loginPassword.value.trim();
+    const cred = await signInWithEmailAndPassword(auth, email, password);
     cerrarModalAuth();
-    mostrarAlerta("Hola, Bienvenido " + (cred.user.displayName||email));
-  }catch(err){ console.error(err); mostrarAlerta("Usuario o contraseña incorrecta","red"); }
+    mostrarAlerta("Hola, Bienvenido " + (cred.user.displayName || email));
+  } catch (err) { mostrarAlerta("Usuario o contraseña incorrecta", "red"); }
 });
 
-/* ===== NAVBAR & USUARIO ===== */
-function pintarUsuarioNavbar(user){
-  if(document.getElementById("userinfo")) return;
+/* ===== NAVBAR ===== */
+function cerrarModalAuth() {
+  const modal = bootstrap.Modal.getInstance(document.getElementById("authModal"));
+  if (modal) modal.hide();
+}
+
+function pintarUsuarioNavbar(user) {
+  if (document.getElementById("userinfo")) return;
   const foto = user.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.displayName || user.email)}`;
   const nombre = user.displayName || user.email;
+
   const li = document.createElement("li");
   li.className = "nav-item dropdown ms-3 d-flex align-items-center";
   li.id = "userinfo";
@@ -271,12 +307,14 @@ function pintarUsuarioNavbar(user){
   document.getElementById("cerrarSesionBtn").addEventListener("click", async () => await signOut(auth));
   document.getElementById("misPedidosBtn").addEventListener("click", async () => {
     await cargarPedidosUsuario();
-    new bootstrap.Modal(document.getElementById("modalPedidos")).show();
+    const modal = new bootstrap.Modal(document.getElementById("modalPedidos"));
+    modal.show();
   });
 
   document.getElementById("btnCarritoIcono").addEventListener("click", () => {
     renderCarrito();
-    new bootstrap.Modal(document.getElementById("modalCarrito")).show();
+    const modalCarrito = new bootstrap.Modal(document.getElementById("modalCarrito"));
+    modalCarrito.show();
   });
 
   actualizarContador();
@@ -285,21 +323,21 @@ function pintarUsuarioNavbar(user){
 /* ===== CARRITO ===== */
 let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
-function actualizarContador(){
+function actualizarContador() {
   const contador = document.getElementById("contadorCarrito");
-  if(contador) contador.textContent = carrito.reduce((acc,p)=>acc+(p.cantidad||1),0);
+  if (contador) contador.textContent = carrito.reduce((acc, p) => acc + (p.cantidad || 1), 0);
 }
 
-function renderCarrito(){
+function renderCarrito() {
   const lista = document.getElementById("listaCarrito");
-  lista.innerHTML="";
-  let total=0;
-  carrito.forEach((p,i)=>{
-    const cantidad=p.cantidad||1;
-    total+=p.precio*cantidad;
-    const div=document.createElement("div");
-    div.className="d-flex justify-content-between align-items-center border-bottom py-2";
-    div.innerHTML=`
+  lista.innerHTML = "";
+  let total = 0;
+  carrito.forEach((p, i) => {
+    const cantidad = p.cantidad || 1;
+    total += p.precio * cantidad;
+    const div = document.createElement("div");
+    div.className = "d-flex justify-content-between align-items-center border-bottom py-2";
+    div.innerHTML = `
       <div class="d-flex align-items-center">
         <img src="${p.img}" width="50" height="50" class="me-2 rounded">
         <span>${p.nombre}</span>
@@ -308,39 +346,49 @@ function renderCarrito(){
         <button class="btn btn-sm btn-secondary btn-restar me-1" data-index="${i}">-</button>
         <span class="mx-1">${cantidad}</span>
         <button class="btn btn-sm btn-secondary btn-sumar ms-1" data-index="${i}">+</button>
-        <span class="fw-bold ms-3">S/ ${(p.precio*cantidad).toFixed(2)}</span>
+        <span class="fw-bold ms-3">S/ ${(p.precio * cantidad).toFixed(2)}</span>
         <button class="btn btn-sm btn-danger btn-eliminar ms-2" data-index="${i}"><i class="bi bi-trash"></i></button>
       </div>
     `;
     lista.appendChild(div);
   });
-  document.getElementById("totalCarrito").textContent="S/ "+total.toFixed(2);
+  document.getElementById("totalCarrito").textContent = "S/ " + total.toFixed(2);
 
-  document.querySelectorAll(".btn-sumar").forEach(btn=>btn.addEventListener("click",()=>{ const i=btn.dataset.index; carrito[i].cantidad++; guardarCarrito(); }));
-  document.querySelectorAll(".btn-restar").forEach(btn=>btn.addEventListener("click",()=>{ const i=btn.dataset.index; carrito[i].cantidad--; if(carrito[i].cantidad<=0) carrito.splice(i,1); guardarCarrito(); }));
-  document.querySelectorAll(".btn-eliminar").forEach(btn=>btn.addEventListener("click",()=>{ const i=btn.dataset.index; carrito.splice(i,1); guardarCarrito(); }));
+  document.querySelectorAll(".btn-sumar").forEach(btn => btn.addEventListener("click", () => {
+    const i = btn.dataset.index; carrito[i].cantidad++; guardarCarrito();
+  }));
+  document.querySelectorAll(".btn-restar").forEach(btn => btn.addEventListener("click", () => {
+    const i = btn.dataset.index; carrito[i].cantidad--; if(carrito[i].cantidad <=0) carrito.splice(i,1); guardarCarrito();
+  }));
+  document.querySelectorAll(".btn-eliminar").forEach(btn => btn.addEventListener("click", () => {
+    const i = btn.dataset.index; carrito.splice(i,1); guardarCarrito();
+  }));
 }
 
-function guardarCarrito(){ localStorage.setItem("carrito",JSON.stringify(carrito)); renderCarrito(); actualizarContador(); }
+function guardarCarrito() {
+  localStorage.setItem("carrito", JSON.stringify(carrito));
+  renderCarrito(); actualizarContador();
+}
 
-document.querySelectorAll(".addToCart").forEach(btn=>{
-  btn.addEventListener("click",()=>{
-    const card=btn.closest(".card");
-    const nombre=card.querySelector(".card-title").textContent;
-    const precio=parseFloat(card.querySelector(".fw-bold").textContent.replace("s/","").trim());
-    const img=card.querySelector("img").src;
-    const exist=carrito.find(p=>p.nombre===nombre);
-    if(exist) exist.cantidad++; else carrito.push({nombre,precio,img,cantidad:1});
+/* ===== AGREGAR PRODUCTOS ===== */
+document.querySelectorAll(".addToCart").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const card = btn.closest(".card");
+    const nombre = card.querySelector(".card-title").textContent;
+    const precio = parseFloat(card.querySelector(".fw-bold").textContent.replace("s/", "").trim());
+    const img = card.querySelector("img").src;
+    const exist = carrito.find(p => p.nombre === nombre);
+    if(exist) exist.cantidad++; else carrito.push({nombre, precio, img, cantidad:1});
     guardarCarrito();
-    mostrarAlerta("El producto se agregó correctamente 😀");
+    mostrarAlerta("Producto agregado al carrito 😀");
   });
 });
 
 /* ===== PAGAR ===== */
-document.getElementById("btnComprar").addEventListener("click", async()=>{
+document.getElementById("btnComprar").addEventListener("click", async () => {
   const user = auth.currentUser;
-  if(!user){ mostrarAlerta("Debes iniciar sesión para pagar","red"); return; }
-  if(carrito.length===0){ mostrarAlerta("Tu carrito está vacío","red"); return; }
+  if(!user){ mostrarAlerta("Debes iniciar sesión para pagar", "red"); return; }
+  if(carrito.length ===0){ mostrarAlerta("Tu carrito está vacío", "red"); return; }
   try{
     await addDoc(collection(db,"Pedidos"),{
       uid:user.uid,
@@ -348,16 +396,16 @@ document.getElementById("btnComprar").addEventListener("click", async()=>{
       total:carrito.reduce((acc,i)=>acc+i.precio*(i.cantidad||1),0),
       fecha:serverTimestamp()
     });
-    mostrarAlerta("Pedido realizado con éxito 😀");
+    mostrarAlerta("Pedido realizado con éxito");
     carrito=[]; guardarCarrito();
     bootstrap.Modal.getInstance(document.getElementById("modalCarrito")).hide();
-  }catch(err){ console.error(err); mostrarAlerta("Error al realizar el pedido: "+err.message,"red"); }
+  }catch(err){ mostrarAlerta("Error al realizar el pedido: "+err.message, "red"); }
 });
 
-/* ===== PEDIDOS USUARIO ===== */
+/* ===== PEDIDOS ===== */
 async function cargarPedidosUsuario(){
   const user = auth.currentUser;
-  if(!user){ mostrarAlerta("Debes iniciar sesión","red"); return; }
+  if(!user){ mostrarAlerta("Debes iniciar sesión para ver tus pedidos", "red"); return; }
   const q = query(collection(db,"Pedidos"),where("uid","==",user.uid));
   const snapshot = await getDocs(q);
   const lista = document.getElementById("listaPedidos"); lista.innerHTML="";
